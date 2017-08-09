@@ -89,7 +89,7 @@ const go = () => new Promise((resolve, reject) => {
 
 				if (response === undefined) {
 					console.log(chalk.red('Received "Undefined" data for ${chalk.white(prettyDate)}. You may do well to lower the streams.'))
-					resolve('Zoinks!!')
+					return reject('Zoinks!!')
 				}
 
 				const output = JSON.stringify(response)
