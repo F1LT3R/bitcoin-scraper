@@ -10,7 +10,7 @@ Scrape the entire Bitcoin chart history to JSON.
 git clone https://github.com/F1LT3R/bitcoin-scraper.git
 cd bitcoin-scraper
 npm install
-node index.js
+node scrape.js
 ```
 
 ## Output be like...
@@ -64,3 +64,12 @@ DONE!
 | Timestamp  |  Open  |  High  |  Low   | Close  | Volume (BTC) | Volume (Currency) | Weighted Price (USD) |
 |------------|--------|--------|--------|--------|--------------|-------------------|----------------------|
 | 1419033600 | 318.58 | 318.58 | 318.58 | 318.58 |   0.01719605 |       5.478317609 |               318.58 |
+
+
+## Le Combine...
+
+Combine all data into one file sequentially.
+
+```shell
+node combine.js bitcoin-history.json
+```
