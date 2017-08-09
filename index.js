@@ -70,9 +70,18 @@ const go = () => new Promise((resolve, reject) => {
 			continue
 		}
 
+		const prettyDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getUTCDate()
+		const dataPath = fetch.dataSourceURL + prettyDate
+		const fileName = `${fetch.market}-${prettyDate}.json`
+		const filePath = path.join(dataDir, fileName)
+
+		// Don't re-download if thie file already exists
+		if (fs.existsSync(filePath)) {
+			console.log(`Passover: ${chalk.magenta(filePath)} (already exists)`)
+			continue
+		}
+
 		pipeline.push(new Promise((resolve, reject) => {
-			const prettyDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getUTCDate()
-			const dataPath = fetch.dataSourceURL + prettyDate
 			console.log(`Fetching: ${chalk.yellow(prettyDate)}`)
 
 			getJSON(dataPath, (error, response) => {
@@ -80,10 +89,9 @@ const go = () => new Promise((resolve, reject) => {
 
 				if (response === undefined) {
 					console.log(chalk.red('Received "Undefined" data for ${chalk.white(prettyDate)}. You may do well to lower the streams.'))
+					resolve('Zoinks!!')
 				}
 
-				const fileName = `${fetch.market}-${prettyDate}.json`
-				const filePath = path.join(dataDir, fileName)
 				const output = JSON.stringify(response)
 
 				fs.writeFile(filePath, output, 'utf8', err => {
@@ -91,7 +99,7 @@ const go = () => new Promise((resolve, reject) => {
 						return reject(err)
 					} else {
 						console.log(`Saved to: ${chalk.blue(filePath)}`)
-						resolve('Ok!')
+						resolve('Ok')
 					}
 				})
 			})
