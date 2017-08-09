@@ -1,9 +1,10 @@
-bitcoin-scraper
-===============
+# Bitcoin Chart Scraper
 
-scrapes bitcoin data to json
+Scrape the entire Bitcoin chart history to JSON.
 
-##Le Scrape...
+
+
+## Le Scrape...
 
 ```shell
 git clone https://github.com/F1LT3R/bitcoin-scraper.git
@@ -12,16 +13,36 @@ npm install
 node index.js
 ```
 
-Output be like...
+## Output be like...
 
 ```shell
-2014-12-17 was saved!
-2014-12-18 was saved!
-2014-12-20 was saved!
-2014-12-19 was saved!
+  _                 _              _
+ /_)._/__  _  ._   / `/_ _  __/_  /_`_  __  _  _  _
+/_)/ / /_ /_/// / /_,/ //_|/ /   ._//_ //_|/_//_'/
+                                          /
+Running with maxstreams=8
+
+Fetching: 2017-8-9
+Fetching: 2017-8-8
+Fetching: 2017-8-7
+Fetching: 2017-8-6
+Fetching: 2017-8-5
+Fetching: 2017-8-4
+Fetching: 2017-8-3
+Fetching: 2017-8-2
+Recevied: 2017-8-3
+Saved to: data/bitstampUSD-2017-8-3.json
+Recevied: 2017-8-9
+Saved to: data/bitstampUSD-2017-8-9.json
+Recevied: 2017-8-6
+Saved to: data/bitstampUSD-2017-8-6.json
+Recevied: 2017-8-7
+Saved to: data/bitstampUSD-2017-8-7.json
+...
+DONE!
 ```
 
-Data be all...
+## Data be all...
 
 ```json
 [
@@ -38,7 +59,7 @@ Data be all...
   ...
 ```
 
-##Columns
+## Columns are so...
 
 | Timestamp  |  Open  |  High  |  Low   | Close  | Volume (BTC) | Volume (Currency) | Weighted Price (USD) |
 |------------|--------|--------|--------|--------|--------------|-------------------|----------------------|
