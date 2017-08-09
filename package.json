@@ -1,0 +1,18 @@
+{
+  "name": "bitcoin-scraper",
+  "version": "0.0.1",
+  "description": "scrapes bitcoin data to json",
+  "main": "index.js",
+  "author": "Alistair MacDonald <al@pwn.io>",
+  "email": "al@pwn.io",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.1.0",
+    "figlet": "^1.2.0",
+    "get-json": "0.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/f1lt3r/bitcoin-scraper.git"
+  }
+}
