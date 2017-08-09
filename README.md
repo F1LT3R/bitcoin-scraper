@@ -2,7 +2,7 @@
 
 Scrape the entire Bitcoin chart history to JSON.
 
-
+![Screenshot](screenshot.jpg)
 
 ## Le Scrape...
 
