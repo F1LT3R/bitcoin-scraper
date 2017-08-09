@@ -5,7 +5,7 @@ const chalk = require('chalk')
 const figlet = require('figlet')
 
 const outputFile = process.argv.slice(2)[0]
-const dataDir = 'data'
+const dataDir = 'data/'
 
 console.log(chalk.green(figlet.textSync('Bitcoin Chart Scraper', {
 	font: 'pepper',
@@ -16,11 +16,11 @@ console.log(chalk.dim(`Combining data to=${chalk.yellow(outputFile)} \n`))
 const files = []
 
 function compare (a, b) {
-	if (a.date < b.date) {
+	if (a.time < b.time) {
 		return -1
 	}
 
-	if (a.date > b.date) {
+	if (a.time > b.time) {
 		return 1
 	}
 
@@ -29,12 +29,21 @@ function compare (a, b) {
 
 fs.readdir(dataDir, (err, list) => {
 	list.forEach(file => {
-		const date = new Date(file.split('bitstampUSD-')[1].split('.json')[0])
-		const time = date.getTime()
+		let date
+		let time
+
+		try {
+			date = new Date(file.split('bitstampUSD-')[1].split('.json')[0])
+			time = date.getTime()
+		} catch (err) {
+			return
+		}
 
 		if (!date) {
 			return
 		}
+
+		console.log(date, file)
 
 		files.push({
 			file,
@@ -51,9 +60,12 @@ fs.readdir(dataDir, (err, list) => {
 
 	files.forEach(day => {
 		const filePath = path.join(dataDir, day.file)
-		const contents = require(path.join(__dirname, filePath))
-		combinedData = combinedData.concat(contents)
-		process.stdout.write('.')
+		const contents = fs.readFileSync(path.join(__dirname, filePath)).toString()
+		const data = JSON.parse(contents)
+
+		console.log(day.date, data[0][7])
+		combinedData = combinedData.concat(data)
+		// process.stdout.write('.')
 	})
 
 	const outputData = JSON.stringify(combinedData)

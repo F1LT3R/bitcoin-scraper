@@ -4,22 +4,16 @@ const path = require('path')
 const chalk = require('chalk')
 const figlet = require('figlet')
 
-const dataDir = 'data'
 const maxstreams = 8
+const dataDir = 'data'
 
-console.log(chalk.green(figlet.textSync('Bitcoin Chart Scraper', {
-	font: 'pepper',
-	kerning: 'fitted'
-})))
-console.log(chalk.dim(`Running with maxstreams=${chalk.yellow(maxstreams)} \n`))
+const market = 'bitstampUSD'
 
-const fetch = {
-  market: 'bitstampUSD',
-
+const dates = {
   from: {
   	year: 2011,
   	month: 9,
-  	day: 13
+  	day: 14
   },
 
   to: {
@@ -27,9 +21,21 @@ const fetch = {
   	month: 08,
   	day: 9
   },
-
-  dataSourceURL: 'http://bitcoincharts.com/charts/chart.json?'+'m='+'bitstampUSD'+'&r=1&i=1-min&e'
 }
+
+const baseApiUrl = 'http://bitcoincharts.com/charts/chart.json?'
+
+// Full parms: m=bitstampUSD&SubmitButton=Draw&r=60&i=1-min&c=1&s=2011-09-14&e=2011-09-14&Prev=&Next=&t=S&b=&a1=&m1=10&a2=&m2=25&x=0&i1=&i2=&i3=&i4=&v=1&cv=0&ps=0&l=0&p=0&
+const formatApiUrl = (market, date) => {
+	const apiUrl = `${baseApiUrl}m=${market}&SubmitButton=Draw&r=60&i=1-min&c=1&s=${date}&e=${date}&Prev=&Next=&t=S&b=&a1=&m1=10&a2=&m2=25&x=0&i1=&i2=&i3=&i4=&v=1&cv=0&ps=0&l=0&p=0&`
+	return apiUrl
+}
+
+console.log(chalk.green(figlet.textSync('Bitcoin Chart Scraper', {
+	font: 'pepper',
+	kerning: 'fitted'
+})))
+console.log(chalk.dim(`Running with maxstreams=${chalk.yellow(maxstreams)} \n`))
 
 const url = (baseurl, date) => {
   return baseurl + date
@@ -51,28 +57,27 @@ const getDates = (startDate, stopDate) => {
   return dateArray
 }
 
-const start = new Date(fetch.from.year, fetch.from.month - 1, fetch.from.day)
-const end = new Date(fetch.to.year, fetch.to.month - 1, fetch.to.day)
-const dates = getDates(start, end)
-
+const start = new Date(dates.from.year, dates.from.month - 1, dates.from.day)
+const end = new Date(dates.to.year, dates.to.month - 1, dates.to.day)
+const dateStack = getDates(start, end)
 
 const go = () => new Promise((resolve, reject) => {
-	if (dates.length === 0) {
+	if (dateStack.length === 0) {
 		return resolve('Done!')
 	}
 
 	const pipeline = []
 
 	for (let i = 0; i < maxstreams; i += 1) {
-		const date = dates.pop()
+		const date = dateStack.shift()
 
 		if (!date) {
 			continue
 		}
 
 		const prettyDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getUTCDate()
-		const dataPath = fetch.dataSourceURL + prettyDate
-		const fileName = `${fetch.market}-${prettyDate}.json`
+		const dataPath = formatApiUrl(market, prettyDate)
+		const fileName = `${market}-${prettyDate}.json`
 		const filePath = path.join(dataDir, fileName)
 
 		// Don't re-download if thie file already exists
@@ -82,15 +87,21 @@ const go = () => new Promise((resolve, reject) => {
 		}
 
 		pipeline.push(new Promise((resolve, reject) => {
-			console.log(`Fetching: ${chalk.yellow(prettyDate)}`)
+			console.log(`Fetching: ${chalk.yellow(prettyDate)} - ${chalk.yellow.dim(dataPath)}`)
 
 			getJSON(dataPath, (error, response) => {
-				console.log(`Recevied: ${chalk.green(prettyDate)}`)
+				let cursoryUsd = null
+
+				if (response !== undefined) {
+					cursoryUsd = response[0][7]
+				}
+					console.log(`Recevied: ${chalk.green(prettyDate)} - ${chalk.red('$' + cursoryUsd)}`)
 
 				if (response === undefined) {
-					console.log(chalk.red('Received "Undefined" data for ${chalk.white(prettyDate)}. You may do well to lower the streams.'))
-					return reject('Zoinks!!')
+					console.log(chalk.red(`Received "Undefined" data for ${chalk.white(prettyDate)}. Too many streams? (Data for ome dates are not avilable, eg: '2011-10-1')`))
+					response = []
 				}
+
 
 				const output = JSON.stringify(response)
 
