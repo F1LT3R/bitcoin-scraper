@@ -79,7 +79,7 @@ const go = () => new Promise((resolve, reject) => {
 				console.log(`Recevied: ${chalk.green(prettyDate)}`)
 
 				if (response === undefined) {
-					return reject(chalk.red('Received "Undefined" data, try lowering the streams.'))
+					console.log(chalk.red('Received "Undefined" data for ${chalk.white(prettyDate)}. You may do well to lower the streams.'))
 				}
 
 				const fileName = `${fetch.market}-${prettyDate}.json`
