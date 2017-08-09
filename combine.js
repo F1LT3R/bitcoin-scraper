@@ -43,8 +43,6 @@ fs.readdir(dataDir, (err, list) => {
 			return
 		}
 
-		console.log(date, file)
-
 		files.push({
 			file,
 			date,
@@ -63,9 +61,13 @@ fs.readdir(dataDir, (err, list) => {
 		const contents = fs.readFileSync(path.join(__dirname, filePath)).toString()
 		const data = JSON.parse(contents)
 
-		console.log(day.date, data[0][7])
-		combinedData = combinedData.concat(data)
-		// process.stdout.write('.')
+		if (data.length > 0) {
+			// const prettyDate = day.date.toString().split(':')[0].substr(0, 15)
+			// const usd = '$' + data[0][7]
+			// console.log(chalk.yellow(prettyDate), chalk.red(usd))
+			combinedData = combinedData.concat(data)
+		}
+		process.stdout.write('.')
 	})
 
 	const outputData = JSON.stringify(combinedData)
