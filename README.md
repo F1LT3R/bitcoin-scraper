@@ -4,7 +4,7 @@ Scrape the entire Bitcoin chart history to JSON.
 
 ![Screenshot](screenshot.jpg)
 
-## Le Scrape...
+## Install & Scrape
 
 ```shell
 git clone https://github.com/F1LT3R/bitcoin-scraper.git
@@ -13,7 +13,7 @@ npm install
 node scrape.js
 ```
 
-## Output be like...
+## Output Example
 
 ```shell
   _                 _              _
@@ -42,7 +42,7 @@ Saved to: data/bitstampUSD-2017-8-7.json
 DONE!
 ```
 
-## Data be all...
+## Data Structure
 
 ```json
 [
@@ -59,7 +59,7 @@ DONE!
   ...
 ```
 
-## Columns are so...
+## Columns
 
 | Timestamp  |  Open  |  High  |  Low   | Close  | Volume (BTC) | Volume (Currency) | Weighted Price (USD) |
 |------------|--------|--------|--------|--------|--------------|-------------------|----------------------|
@@ -71,5 +71,15 @@ DONE!
 Combine all data into one file sequentially.
 
 ```shell
-node combine.js bitcoin-history.json
+node combine.js data/bitcoin-history.json
+```
+
+## Chart...
+
+![Chart Bitcoin Moores Law - Logarithmic Y axis dollars](log-moore-btc.jpg)
+
+```shell
+npm install http-server -g
+http-server
+# point your browser to http://localhost:8080/chart.html
 ```
