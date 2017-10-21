@@ -8,7 +8,7 @@ const outputFile = process.argv.slice(2)[0]
 const dataDir = 'data/'
 
 console.log(chalk.green(figlet.textSync('Bitcoin Chart Scraper', {
-	font: 'pepper',
+	font: 'Pepper',
 	kerning: 'fitted'
 })))
 console.log(chalk.dim(`Combining data to=${chalk.yellow(outputFile)} \n`))

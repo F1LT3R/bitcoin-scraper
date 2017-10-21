@@ -10,6 +10,7 @@ Scrape the entire Bitcoin chart history to JSON.
 git clone https://github.com/F1LT3R/bitcoin-scraper.git
 cd bitcoin-scraper
 npm install
+mkdir data
 node scrape.js
 ```
 

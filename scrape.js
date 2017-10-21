@@ -32,7 +32,7 @@ const formatApiUrl = (market, date) => {
 }
 
 console.log(chalk.green(figlet.textSync('Bitcoin Chart Scraper', {
-	font: 'pepper',
+	font: 'Pepper',
 	kerning: 'fitted'
 })))
 console.log(chalk.dim(`Running with maxstreams=${chalk.yellow(maxstreams)} \n`))
