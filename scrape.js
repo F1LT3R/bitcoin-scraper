@@ -1,3 +1,4 @@
+"use strict";
 const getJSON = require('get-json')
 const fs = require('fs')
 const path = require('path')
