@@ -11,15 +11,15 @@ const market = 'bitstampUSD'
 
 const dates = {
   from: {
-  	year: 2011,
+  	year: 2017,
   	month: 9,
   	day: 14
   },
 
   to: {
   	year: 2017,
-  	month: 08,
-  	day: 9
+  	month: 12,
+  	day: 14
   },
 }
 
@@ -75,7 +75,7 @@ const go = () => new Promise((resolve, reject) => {
 			continue
 		}
 
-		const prettyDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getUTCDate()
+		const prettyDate = date.getFullYear() + '-' + (date.getUTCMonth()+1) + '-' + date.getUTCDate()
 		const dataPath = formatApiUrl(market, prettyDate)
 		const fileName = `${market}-${prettyDate}.json`
 		const filePath = path.join(dataDir, fileName)
@@ -129,3 +129,4 @@ go().then(() => {
 }).catch(err => {
 	console.error(err)
 })
+
