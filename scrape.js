@@ -11,15 +11,15 @@ const market = 'bitstampUSD'
 
 const dates = {
   from: {
-  	year: 2017,
+  	year: 2011,
   	month: 9,
   	day: 14
   },
 
   to: {
   	year: 2017,
-  	month: 12,
-  	day: 14
+  	month: 08,
+  	day: 9
   },
 }
 
