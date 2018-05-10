@@ -47,6 +47,14 @@ Date.prototype.addDays = function(days) {
   return dat
 }
 
+const zeroFill = (number, width) => {
+  width -= number.toString().length;
+  if (width > 0) {
+    return new Array(width + (/\./.test(number) ? 2 : 1)).join('0') + number;
+  }
+  return number + ""; // always return a string
+}
+
 const getDates = (startDate, stopDate) => {
   const dateArray = new Array()
   let currentDate = startDate
@@ -75,7 +83,7 @@ const go = () => new Promise((resolve, reject) => {
 			continue
 		}
 
-		const prettyDate = date.getFullYear() + '-' + (date.getUTCMonth()+1) + '-' + date.getUTCDate()
+		const prettyDate = date.getFullYear() + '-' + zeroFill(date.getUTCMonth()+1, 2) + '-' + zeroFill(date.getUTCDate(), 2)
 		const dataPath = formatApiUrl(market, prettyDate)
 		const fileName = `${market}-${prettyDate}.json`
 		const filePath = path.join(dataDir, fileName)
