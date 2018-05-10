@@ -3,7 +3,7 @@ const dataFile = 'data/bitcoin-history.json'
 const chart = document.getElementById('chart')
 const log = document.getElementById('log')
 const ctx = chart.getContext('2d')
-ctx.imageSmoothingEnabled= false
+ctx.imageSmoothingEnabled = false
 
 const width = 600
 const height = 400
@@ -60,12 +60,12 @@ const render = data => new Promise((resolve, reject) => {
 	const max_u = Math.log(max) / Math.log(10)
 	const range_u = max_u - min_u
 
-    ctx.strokeStyle = 'black'
+	ctx.strokeStyle = 'black'
 	ctx.moveTo(0, height)
 	ctx.lineTo(width, 0)
 	ctx.stroke()
 
-    ctx.fillStyle = 'red'
+	ctx.fillStyle = 'red'
 
 	// for (let i = 0; i < 600; i += 1) {
 	// 	const rowIndex = i * xratio
@@ -92,7 +92,7 @@ const render = data => new Promise((resolve, reject) => {
 		}
 
 		const x = i * ratioX
-	    const y = height - (Math.log(usd) / Math.log(10) - min_u) / range_u * height
+		const y = height - (Math.log(usd) / Math.log(10) - min_u) / range_u * height
 		ctx.fillRect(x, y, 1, 1)
 	}
 
@@ -132,11 +132,11 @@ const loadData = () => new Promise((resolve, reject) => {
 })
 
 loadData(dataFile)
-.then(render)
-.then(msg => {
-	console.log(msg)
-})
-.catch(err => {
-	console.error(err)
-	alert('Error: see console')
-})
+	.then(render)
+	.then(msg => {
+		console.log(msg)
+	})
+	.catch(err => {
+		console.error(err)
+		alert('Error: see console')
+	})

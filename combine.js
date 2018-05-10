@@ -15,7 +15,8 @@ console.log(chalk.dim(`Combining data to=${chalk.yellow(outputFile)} \n`))
 
 const files = []
 
-function compare (a, b) {
+function compare(a, b)
+{
 	if (a.time < b.time) {
 		return -1
 	}
@@ -75,9 +76,10 @@ fs.readdir(dataDir, (err, list) => {
 	fs.writeFile(outputFile, outputData, 'utf8', err => {
 		process.stdout.write('\n')
 
-		if(err) {
+		if (err) {
 			return console.error(chalk.red(err))
-		} else {
+		}
+		else {
 			console.log(`Saved to: ${chalk.blue(outputFile)}`)
 		}
 	})

@@ -10,17 +10,17 @@ const dataDir = 'data'
 const market = 'bitstampUSD'
 
 const dates = {
-  from: {
-  	year: 2011,
-  	month: 9,
-  	day: 14
-  },
+	from: {
+		year: 2011,
+		month: 9,
+		day: 14
+	},
 
-  to: {
-  	year: 2017,
-  	month: 08,
-  	day: 9
-  },
+	to: {
+		year: 2017,
+		month: 08,
+		day: 9
+	},
 }
 
 const baseApiUrl = 'http://bitcoincharts.com/charts/chart.json?'
@@ -38,31 +38,31 @@ console.log(chalk.green(figlet.textSync('Bitcoin Chart Scraper', {
 console.log(chalk.dim(`Running with maxstreams=${chalk.yellow(maxstreams)} \n`))
 
 const url = (baseurl, date) => {
-  return baseurl + date
+	return baseurl + date
 }
 
-Date.prototype.addDays = function(days) {
-  const dat = new Date(this.valueOf())
-  dat.setDate(dat.getDate() + days)
-  return dat
+Date.prototype.addDays = function (days) {
+	const dat = new Date(this.valueOf())
+	dat.setDate(dat.getDate() + days)
+	return dat
 }
 
 const zeroFill = (number, width) => {
-  width -= number.toString().length;
-  if (width > 0) {
-    return new Array(width + (/\./.test(number) ? 2 : 1)).join('0') + number;
-  }
-  return number + ""; // always return a string
+	width -= number.toString().length;
+	if (width > 0) {
+		return new Array(width + (/\./.test(number) ? 2 : 1)).join('0') + number;
+	}
+	return number + ""; // always return a string
 }
 
 const getDates = (startDate, stopDate) => {
-  const dateArray = new Array()
-  let currentDate = startDate
-  while (currentDate <= stopDate) {
-    dateArray.push(currentDate)
-    currentDate = currentDate.addDays(1)
-  }
-  return dateArray
+	const dateArray = new Array()
+	let currentDate = startDate
+	while (currentDate <= stopDate) {
+		dateArray.push(currentDate)
+		currentDate = currentDate.addDays(1)
+	}
+	return dateArray
 }
 
 const start = new Date(dates.from.year, dates.from.month - 1, dates.from.day)
@@ -83,7 +83,7 @@ const go = () => new Promise((resolve, reject) => {
 			continue
 		}
 
-		const prettyDate = date.getUTCFullYear() + '-' + zeroFill(date.getUTCMonth()+1, 2) + '-' + zeroFill(date.getUTCDate(), 2)
+		const prettyDate = date.getUTCFullYear() + '-' + zeroFill(date.getUTCMonth() + 1, 2) + '-' + zeroFill(date.getUTCDate(), 2)
 		const dataPath = formatApiUrl(market, prettyDate)
 		const fileName = `${market}-${prettyDate}.json`
 		const filePath = path.join(dataDir, fileName)
@@ -110,13 +110,13 @@ const go = () => new Promise((resolve, reject) => {
 					response = []
 				}
 
-
 				const output = JSON.stringify(response)
 
 				fs.writeFile(filePath, output, 'utf8', err => {
-					if(err) {
+					if (err) {
 						return reject(err)
-					} else {
+					}
+					else {
 						console.log(`Saved to: ${chalk.blue(filePath)}`)
 						resolve('Ok')
 					}
