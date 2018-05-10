@@ -103,10 +103,10 @@ const go = () => new Promise((resolve, reject) => {
 				if (response !== undefined) {
 					cursoryUsd = response[0][7]
 				}
-					console.log(`Recevied: ${chalk.green(prettyDate)} - ${chalk.red('$' + cursoryUsd)}`)
+				console.log(`Recevied: ${chalk.green(prettyDate)} - ${chalk.red('$' + cursoryUsd)}`)
 
 				if (response === undefined) {
-					console.log(chalk.red(`Received "Undefined" data for ${chalk.white(prettyDate)}. Too many streams? (Data for ome dates are not avilable, eg: '2011-10-1')`))
+					console.log(chalk.red(`Received "Undefined" data for ${chalk.white(prettyDate)}. Too many streams? (Data for old dates are not available, eg: '2011-10-1')`))
 					response = []
 				}
 
