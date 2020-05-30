@@ -1,22 +1,29 @@
-const dataFile = 'data/bitcoin-history.json'
+const dataFile = './bitcoin-history.json'
 
 const chart = document.getElementById('chart')
-const log = document.getElementById('log')
-const ctx = chart.getContext('2d')
-ctx.imageSmoothingEnabled= false
+const $price = document.getElementById('price')
+const $date = document.getElementById('date')
 
-const width = 600
-const height = 400
+const ctx = chart.getContext('2d')
+ctx.imageSmoothingEnabled = false
+
+const width = window.innerWidth
+const height = window.innerHeight
 
 const setupCanvas = () => {
 	ctx.width = width
 	ctx.height = height
-	chart.setAttribute('width', width)
-	chart.setAttribute('height', height)
-	chart.style.border = '1px solid black'
+	chart.setAttribute('width', width);
+	chart.setAttribute('height', height);
 }
 
 const __null__ = 1.7e+308
+
+const halveDates = [
+	'2012-11-28',
+	'2016-06-09',
+	'2020-05-11'
+];
 
 const findMinMax = data => {
 	let max = 0
@@ -60,7 +67,8 @@ const render = data => new Promise((resolve, reject) => {
 	const max_u = Math.log(max) / Math.log(10)
 	const range_u = max_u - min_u
 
-    ctx.strokeStyle = 'black'
+	ctx.strokeStyle = '#FF00FF'
+	ctx.lineWidth = 2;
 	ctx.moveTo(0, height)
 	ctx.lineTo(width, 0)
 	ctx.stroke()
@@ -83,14 +91,9 @@ const render = data => new Promise((resolve, reject) => {
 	for (let i = 0; i < data.length; i += 10) {
 		const row = data[i]
 		const usd = row[7]
-
-		// const date = row[0]
-		// console.log(new Date(date), usd)
-
 		if (usd === __null__) {
 			continue
 		}
-
 		const x = i * ratioX
 	    const y = height - (Math.log(usd) / Math.log(10) - min_u) / range_u * height
 		ctx.fillRect(x, y, 1, 1)
@@ -101,10 +104,23 @@ const render = data => new Promise((resolve, reject) => {
 		const y = event.layerY
 		const rowIndex = x * xratio
 		const row = data[Math.floor(rowIndex)]
-		const usd = row[7]
+		let usd = row[7];
+		// const date = //String(new Date(row[0]));
+		const dateStamp = new Date(row[0] * 1000)
+		const year = dateStamp.getFullYear();
+		const month = String(dateStamp.getUTCMonth() + 1).padStart(2, '0');
+		const day = String(dateStamp.getUTCDate()).padStart(2, '0');
+		const hours = String(dateStamp.getHours()).padStart(2, '0');
+		const minutes = String(dateStamp.getMinutes()).padStart(2, '0');
+
+		const prettyDate = `${year}-${month}-${day} | ${hours}:${minutes}`;
+
 		if (usd !== __null__) {
-			const display = `$${usd}`
-			log.innerHTML = display
+			price.innerHTML = `$${usd.toFixed(2)}`
+			date.innerHTML = `${prettyDate}`
+		} else {
+			// const display = `NO DATA`
+			// log.innerHTML = display
 		}
 	})
 

@@ -2,7 +2,7 @@
 
 Scrape the entire Bitcoin chart history to JSON.
 
-![Screenshot](screenshot.jpg)
+![Screenshot](images/screenshot.jpg)
 
 ## Install & Scrape
 
@@ -77,10 +77,18 @@ node combine.js data/bitcoin-history.json
 
 ## Chart...
 
-![Chart Bitcoin Moores Law - Logarithmic Y axis dollars](log-moore-btc.jpg)
+Charting Bitcoin against the Moore's Law theory of Bitcoin growth. Logarithmic Y axis = dollars.
 
 ```shell
 npm install http-server -g
 http-server
 # point your browser to http://localhost:8080/chart.html
 ```
+
+**2020 May 30**
+
+![Chart Bitcoin 2020 May 30](images/log-more-btc-2020-05-30.png)
+
+**2017 August 9**
+
+![Chart Bitcoin 2017 August 9](images/log-moore-btc.jpg)

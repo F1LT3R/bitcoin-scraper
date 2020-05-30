@@ -70,7 +70,7 @@ fs.readdir(dataDir, (err, list) => {
 		process.stdout.write('.')
 	})
 
-	const outputData = JSON.stringify(combinedData)
+	const outputData = JSON.stringify(combinedData);
 
 	fs.writeFile(outputFile, outputData, 'utf8', err => {
 		process.stdout.write('\n')
