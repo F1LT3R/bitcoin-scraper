@@ -47,8 +47,8 @@ const dates = {
 
   to: {
     year: 2020,
-    month: 05,
-    day: 31,
+    month: 08,
+    day: 22,
   },
 };
 
