@@ -5,12 +5,13 @@ const chalk = require("chalk");
 const figlet = require("figlet");
 const mkdirp = require("mkdirp");
 
-const maxstreams = 1;
+const maxStreams = 4;
 const dataDir = "data";
 
 mkdirp(path.join(__dirname, "data"));
 
 const market = "bitstampUSD";
+const now = new Date();
 
 // Known holes in data
 // bitstampUSD-2011-10-16
@@ -46,9 +47,9 @@ const dates = {
   //    },
 
   to: {
-    year: 2020,
-    month: 08,
-    day: 22,
+    year: now.getFullYear(),
+    month: now.getMonth() + 1,
+    day: now.getUTCDate(),
   },
 };
 
@@ -69,7 +70,7 @@ console.log(
   )
 );
 console.log(
-  chalk.dim(`Running with maxstreams=${chalk.yellow(maxstreams)} \n`)
+  chalk.dim(`Running with maxStreams=${chalk.yellow(maxStreams)} \n`)
 );
 
 const url = (baseurl, date) => {
@@ -104,7 +105,7 @@ const go = () =>
 
     const pipeline = [];
 
-    for (let i = 0; i < maxstreams; i += 1) {
+    for (let i = 0; i < maxStreams; i += 1) {
       const date = dateStack.shift();
 
       if (!date) {
